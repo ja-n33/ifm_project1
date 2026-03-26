@@ -76,7 +76,7 @@ assets_reduced <- assets %>%
 
 assets_pie <- ggplot(assets_reduced, aes(x = "", y = val, fill = COUNTERPART_COUNTRY)) +
   geom_col(width = 1) +
-  scale_fill_manual(values = c("United States" = "#003300", "Ireland" = "#00CC33", "Luxembourg" = "#336633", "Other" = "dimgrey", "Brazil" = "#33CC33", "Germany" = "#009900", "United Kingdom" = "#669966", "Spain" = "#99CC99")) +
+  scale_fill_manual(values = c("United States" = "#0e3d2e", "Ireland" = "#5dcaa5", "Luxembourg" = "#336633", "Other" = "dimgrey", "Brazil" = "#33CC33", "Germany" = "#009900", "United Kingdom" = "#669966", "Spain" = "#99CC99")) +
   coord_polar(theta = "y") +
   geom_text(aes(label = ifelse(val > 5, paste0(round(val), "%"), "")), 
             position = position_stack(vjust = 0.5), 
@@ -91,10 +91,10 @@ theme(axis.text = element_blank(),
         axis.line = element_blank(), 
         axis.ticks = element_blank(),
         axis.title = element_blank(),
-        plot.background    = element_rect(fill = "#F7F6F2", color = NA),
-        panel.background   = element_rect(fill = "#F7F6F2", color = NA)) 
+        plot.background    = element_rect(fill = "transparent", color = NA),
+        panel.background   = element_rect(fill = "transparent", color = NA)) 
 
-ggsave(file = here::here("assetspie.png"), plot = assets_pie, width = 10, height = 6, dpi = 300)
+ggsave(file = here::here("assetspie.png"), plot = assets_pie, width = 10, height = 6, dpi = 300, bg = "transparent")
 
 
 ####
@@ -122,7 +122,7 @@ liabilities_reduced <- liabilities %>%
 
 liabilities_pie <- ggplot(liabilities_reduced, aes(x = "", y = val, fill = COUNTERPART_COUNTRY)) +
     geom_col(width = 1) +
-    scale_fill_manual(values = c("United States" = "#003300", "Luxembourg" = "#00CC33", "Cayman Islands" = "#336633", "Other" = "dimgrey", "United Kingdom" = "#33CC33", "Ireland" = "#009900", "Netherlands" = "#669966", "Japan" = "#99CC99")) +
+    scale_fill_manual(values = c("United States" = "#0e3d2e", "Luxembourg" = "#5dcaa5", "Cayman Islands" = "#336633", "Other" = "dimgrey", "United Kingdom" = "#33CC33", "Ireland" = "#009900", "Netherlands" = "#669966", "Japan" = "#99CC99")) +
     coord_polar(theta = "y") +
     geom_text(aes(label = ifelse(val > 5, paste0(round(val), "%"), "")), 
             position = position_stack(vjust = 0.5), 
@@ -137,16 +137,8 @@ liabilities_pie <- ggplot(liabilities_reduced, aes(x = "", y = val, fill = COUNT
         axis.line = element_blank(), 
         axis.ticks = element_blank(),
         axis.title = element_blank(),
-        plot.background    = element_rect(fill = "#F7F6F2", color = NA),
-        panel.background   = element_rect(fill = "#F7F6F2", color = NA)) 
+        plot.background    = element_rect(fill = "transparent", color = NA),
+        panel.background   = element_rect(fill = "transparent", color = NA)) 
 
-ggsave(file = here::here("liabilitiespie.png"), plot = liabilities_pie, width = 10, height = 6, dpi = 300)
+ggsave(file = here::here("liabilitiespie.png"), plot = liabilities_pie, width = 10, height = 6, dpi = 300, bg = "transparent")
 
-
-combined_plot <- patchwork::wrap_plots(assets_pie + liabilities_pie, nrow = 2) +
-                patchwork::plot_annotation(caption = "Source: SARS, Stratalyze, Econdata\nNotes: Shannon index computed over HS 6-digit subheadings. Higher values indicate greater diversity. Values denote the logs of Rand value.", 
-                                theme = theme(plot.title = element_text(face = "bold", size = 14, family = "Georgia"),
-                                            axis.title = element_text(face = "bold", family = "Georgia"),
-                                            plot.caption = element_text(hjust = 0, size = 8, family = "Georgia")))
-
-ggsave(file = here::here("combined_pies.png"), plot = combined_plot, width = 10, height = 6, dpi = 300)

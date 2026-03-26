@@ -110,7 +110,7 @@ mx_ratings <- ratings_dta %>%
 ratingsplot <- ggplot(mx_ratings, aes(x = Year, y = n_Rating, colour = Agency)) +
         geom_line(linewidth = 1.5) +
         scale_x_continuous(breaks = seq(from = 1992, to = 2022, by = 2), expand = c(0, 0)) + 
-        scale_colour_manual(values = c("Moody's" = "#5dcaa5", "S&P" = "#0e3d2e")) +
+        scale_colour_manual(values = c("Moody's" = "#0e3d2e", "S&P" = "#5dcaa5")) +
         geom_vline(xintercept = 1994, color = "black", alpha = 0.12,
              linewidth = 1, linetype = "dashed") +
         annotate("text", x = 1994.3, y = 8.2, label = "Tequila crisis",
@@ -123,7 +123,7 @@ ratingsplot <- ggplot(mx_ratings, aes(x = Year, y = n_Rating, colour = Agency)) 
         labs(title = "Mexican Sovereign Credit Ratings", 
             caption = "Source: S&P, Moody's, Trading Economics\nNote: Ratings reflect the Mexican federal government's ability to service foreign-denomindated bonds", 
             y = "Rating (S&P / Moody's)") +
-        theme_erasmus()
+        theme_erasmus() 
 
 
 ggsave(file = here::here("credit_ratings.png"), plot = ratingsplot, width = 10, height = 6, dpi = 300)

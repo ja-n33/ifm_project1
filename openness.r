@@ -119,7 +119,7 @@ for (i in 1:length(grouplist)){
 
 defacto_intplot <- ggplot(data = defacto_plot %>% filter(Year >= 1996 & Year <= 2022), aes(x = Year, y = value, colour = type)) +
             geom_line(linewidth = 1.5) +
-            scale_colour_manual(values = c("latam" = "#003300", "row" = "#006600", "mexico" = "#33CC33"), labels = c("mexico" = "Mexico", "row" = "Rest of World", "latam" = "Latin America")) +
+            scale_colour_manual(values = c("latam" = "#0e3d2e", "row" = "#006600", "mexico" = "#5dcaa5"), labels = c("mexico" = "Mexico", "row" = "Rest of World", "latam" = "Latin America")) +
             scale_x_continuous(breaks = seq(from = 1996, to = 2022, by = 4), expand = c(0, 0)) + 
             labs(title = "Financial Integration, 1996-2022", 
             caption = "Source: EWN Database\nNote: Financial Integration is the sum of total liabilities and total assets as a percentage of GDP", 

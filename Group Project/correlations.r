@@ -154,7 +154,7 @@ cons_pwt_df <- cons_pwt_df %>%
 
 pwtplot <- ggplot(data = cons_pwt_df[cons_pwt_df$type %in% c("mexc_mexy_pe", "mexc_wldy_pe" ), ], aes(x = year, y = value, colour = type)) +
     geom_line(linewidth = 1) +
-    scale_colour_manual(values = c("mexc_mexy_pe" = "#003300", "mexc_wldy_pe" = "#00CC33"), labels = c("mexc_mexy_pe" = "Correlation with Domestic Output", "mexc_wldy_pe" = "Correlation with World Output")) +
+    scale_colour_manual(values = c("mexc_mexy_pe" = "#0e3d2e", "mexc_wldy_pe" = "#5dcaa5"), labels = c("mexc_mexy_pe" = "Correlation with Domestic Output", "mexc_wldy_pe" = "Correlation with World Output")) +
     scale_x_continuous(breaks = seq(from = 1992, to = 2022, by = 4), expand = c(0, 0)) + 
     geom_vline(xintercept = 1994, color = "black", alpha = 0.2,
              linewidth = 0.75, linetype = "dashed") +

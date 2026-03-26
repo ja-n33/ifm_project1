@@ -80,17 +80,13 @@ mx_long <- mx_df %>%
     mutate(value = ifelse(type %in% liabilitycols, -(value), value)) %>%
     filter(Year >= 1990)
 
-
-
-
-
 balance_plot <- ggplot(data = mx_long, aes(x = Year, y = value, fill = type)) +
     geom_bar(data = mx_long %>% filter(!(type == "balance")), stat = "identity", position = "stack") +
     geom_line(data = mx_long %>% filter(type == "balance"), linewidth = 1, aes(color = type, linetype = type)) +
     geom_hline(yintercept = 0, color = "black", alpha = 0.5,linewidth = 0.75, linetype = "dashed") +
     scale_linetype_manual(values = c("balance" = "solid"), labels = c("balance" = "Balance")) +
     scale_color_manual(values = c("balance" = "black"), labels = c("balance" = "Balance")) +
-    scale_fill_manual(values = c("Portfolio.equity.assets" = "springgreen3", "Portfolio.equity.liabilities" = "springgreen3", "FDI.assets" = "#36454F", "FDI.liabilities" = "#36454F", "Debt.assets.(portfolio.debt.+.other.investment)" = "darkgreen", "Debt.liabilities.(portfolio.debt.+.other.investment)" = "darkgreen", "financial.derivatives.(assets)" = "dimgrey", "financial.derivatives.(liabilities)" = "dimgrey", "FX.Reserves.minus.gold" = "azure3"), 
+    scale_fill_manual(values = c("Portfolio.equity.assets" ="#0e3d2e", "Portfolio.equity.liabilities" = "#0e3d2e", "FDI.assets" = "#5dcaa5", "FDI.liabilities" = "#5dcaa5", "Debt.assets.(portfolio.debt.+.other.investment)" = "darkgreen", "Debt.liabilities.(portfolio.debt.+.other.investment)" = "darkgreen", "financial.derivatives.(assets)" = "dimgrey", "financial.derivatives.(liabilities)" = "dimgrey", "FX.Reserves.minus.gold" = "azure3"), 
                       breaks = c("Portfolio.equity.assets", "FDI.assets", "Debt.assets.(portfolio.debt.+.other.investment)", "financial.derivatives.(assets)", "FX.Reserves.minus.gold"), 
                       labels = c("Portfolio.equity.assets" = "Portfolio Equity", "FDI.assets" = "Foreign Direct Investment", "Debt.assets.(portfolio.debt.+.other.investment)" = "Foreign Debt", "financial.derivatives.(assets)" = "Foreign Derivatives", "FX.Reserves.minus.gold" = "Non-gold FX Reserves")) +
     scale_y_continuous(labels = \(x) format(abs(x), big.mark = ",", scientific = FALSE)) +
