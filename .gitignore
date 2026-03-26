@@ -1,0 +1,20 @@
+# Datasets
+data/
+*.csv
+*.xlsx
+*.dta
+*.rds
+*.RData
+
+# R specific
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS files
+.DS_Store
+
+#Course content
+*.pdf
+*.docx
+
