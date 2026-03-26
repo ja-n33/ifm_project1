@@ -85,7 +85,8 @@ assets_pie <- ggplot(assets_reduced, aes(x = "", y = val, fill = COUNTERPART_COU
             family = "Georgia", 
             fontface = "bold") +
   labs(title = "Mexican Foreign Asset Composition by Country",
-        fill = "Country") +
+        fill = "Country",
+        caption = "Source: IMF") +
     theme_erasmus() + 
 theme(axis.text = element_blank(),
         axis.line = element_blank(), 
@@ -131,7 +132,8 @@ liabilities_pie <- ggplot(liabilities_reduced, aes(x = "", y = val, fill = COUNT
             family = "Georgia", 
             fontface = "bold") +
     labs(title = "Mexican Foreign Liabilities Composition by Country",
-        fill = "Country") +
+        fill = "Country", 
+        caption = "Source: IMF") +
     theme_erasmus() + 
     theme(axis.text = element_blank(),
         axis.line = element_blank(), 

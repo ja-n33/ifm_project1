@@ -43,7 +43,7 @@ theme_erasmus <- function(base_size = 11) {
     # legend
     legend.position    = "right",
     legend.justification = "center",
-    legend_direction = "vertical",
+    legend.direction = "vertical",
     legend.text        = element_text(color = "#2C2C2A", size = 8.5,
                                       family = "Georgia"),
     legend.title       = element_blank(),
