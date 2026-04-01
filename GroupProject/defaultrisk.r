@@ -230,7 +230,7 @@ liabilitycols <- colnames(mx_df)[stringr::str_detect(colnames(mx_df), "liabiliti
 
 mx_long <- mx_df %>%
     mutate(nfa_balance = rowSums(across(all_of(assetcols)), na.rm = TRUE) - rowSums(across(all_of(liabilitycols)), na.rm = TRUE), da_balance = `Debt.assets.(portfolio.debt.+.other.investment)` - `Debt.liabilities.(portfolio.debt.+.other.investment)`, pa_balance = `Portfolio.equity.assets` - `Portfolio.equity.liabilities`, fdi_balance = `FDI.assets` - `FDI.liabilities`,
-          nfa_gdp = nfa_balance / `GDP.(US$)`, da_gdp  = da_balance / `GDP.(US$)`, pa_gdp = pa_balance / `GDP.(US$)`, fdi_gdp =  fdi_balance / `GDP.(US$)`, fx_gdp = FX.Reserves.minus.gold / `GDP.(US$)`, ca_gdp = Current.account.balance / `GDP.(US$)`) %>%
+          nfa_gdp = `net.IIP.excl.gold./.GDP.domestic.currency`, da_gdp  = da_balance / `GDP.(US$)`, pa_gdp = pa_balance / `GDP.(US$)`, fdi_gdp =  fdi_balance / `GDP.(US$)`, fx_gdp = FX.Reserves.minus.gold / `GDP.(US$)`, ca_gdp = Current.account.balance / `GDP.(US$)`) %>%
     select(Year, nfa_gdp, da_gdp, pa_gdp, fx_gdp, fdi_gdp, ca_gdp) %>%
     pivot_longer(!Year, names_to = "type", values_to = "value") %>%
     filter(Year >= 1992)
