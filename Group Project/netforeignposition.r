@@ -66,22 +66,20 @@ data <- openxlsx::read.xlsx(here::here("ewn_2025.xlsx"), "Dataset")
 mx_df <- data %>%
   filter(Country == "Mexico") %>%
   select(Year, Portfolio.equity.assets, Portfolio.equity.liabilities, FDI.assets, FDI.liabilities, `Debt.assets.(portfolio.debt.+.other.investment)`, 
-        `Debt.liabilities.(portfolio.debt.+.other.investment)`, `financial.derivatives.(assets)`, `financial.derivatives.(liabilities)`, `FX.Reserves.minus.gold`)
+        `Debt.liabilities.(portfolio.debt.+.other.investment)`, `financial.derivatives.(assets)`, `financial.derivatives.(liabilities)`, `FX.Reserves.minus.gold`, `GDP.(US$)`, `OFFICIAL.IIP`, `Net.IIP.excl.gold`)
 
 assetcols <- c(colnames(mx_df)[stringr::str_detect(colnames(mx_df), "asset")], "FX.Reserves.minus.gold")
 liabilitycols <- colnames(mx_df)[stringr::str_detect(colnames(mx_df), "liabilities")]
-print(liabilitycols)
-
 
 
 mx_long <- mx_df %>%
-    mutate(balance = rowSums(across(all_of(assetcols)), na.rm = TRUE) - rowSums(across(all_of(liabilitycols)), na.rm = TRUE)) %>%
+    mutate(balance = rowSums(across(all_of(assetcols)), na.rm = TRUE) - rowSums(across(all_of(liabilitycols)), na.rm = TRUE), ratio = balance / `GDP.(US$)` * 100, z_ratio  = (ratio - mean(ratio)) / sd(ratio) * 100) %>%
     pivot_longer(!Year, names_to = "type", values_to = "value") %>%
     mutate(value = ifelse(type %in% liabilitycols, -(value), value)) %>%
     filter(Year >= 1990)
 
 balance_plot <- ggplot(data = mx_long, aes(x = Year, y = value, fill = type)) +
-    geom_bar(data = mx_long %>% filter(!(type == "balance")), stat = "identity", position = "stack") +
+    geom_bar(data = mx_long %>% filter(!(type %in% c("balance", "ratio", "z_ratio"))), stat = "identity", position = "stack") +
     geom_line(data = mx_long %>% filter(type == "balance"), linewidth = 1, aes(color = type, linetype = type)) +
     geom_hline(yintercept = 0, color = "black", alpha = 0.5,linewidth = 0.75, linetype = "dashed") +
     scale_linetype_manual(values = c("balance" = "solid"), labels = c("balance" = "Balance")) +

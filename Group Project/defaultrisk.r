@@ -186,6 +186,8 @@ mx_reserves <- WDI::WDI(country   = "MX",
 mx_ds_ratio <- left_join(mx_exports, left_join(mx_ds, left_join(mx_reserves, mx_imports, by = "year"), by = "year"), by = "year") %>%
   mutate(ds_ratio = ds / (exports  + reserves) * 100)
 
+
+
 ##we can add exports but i think reserves might be better
 debtserviceplot <- ggplot(mx_ds_ratio, aes(x = year, y = ds_ratio, colour = "Mexico")) +
         geom_line(linewidth = 1.5, show.legend = FALSE) +
@@ -208,3 +210,85 @@ debtserviceplot <- ggplot(mx_ds_ratio, aes(x = year, y = ds_ratio, colour = "Mex
 debtserviceplot
 ggsave(file = here::here("debtservice.png"), plot = debtserviceplot, width = 10, height = 6, dpi = 300)
 
+
+##Show Net Financial Position as with the data we used in the second quiz
+
+data <- openxlsx::read.xlsx(here::here("ewn_2025.xlsx"), "Dataset")
+
+##relevant cols: Portfolio.equity.assets, portfolio.equity.liabbilities, FDI.assets, FDI.liabilities, Debt.assets, debt.liabilities
+##financial.derivatives.(assets), financial.derivatives.(liabilities)
+
+
+
+mx_df <- data %>%
+  filter(Country == "Mexico") %>%
+  select(-c("Country", "IFS_Code"))
+
+assetcols <- c(colnames(mx_df)[stringr::str_detect(colnames(mx_df), "asset")], "FX.Reserves.minus.gold")
+liabilitycols <- colnames(mx_df)[stringr::str_detect(colnames(mx_df), "liabilities")]
+
+
+mx_long <- mx_df %>%
+    mutate(nfa_balance = rowSums(across(all_of(assetcols)), na.rm = TRUE) - rowSums(across(all_of(liabilitycols)), na.rm = TRUE), da_balance = `Debt.assets.(portfolio.debt.+.other.investment)` - `Debt.liabilities.(portfolio.debt.+.other.investment)`, pa_balance = `Portfolio.equity.assets` - `Portfolio.equity.liabilities`, fdi_balance = `FDI.assets` - `FDI.liabilities`,
+          nfa_gdp = nfa_balance / `GDP.(US$)`, da_gdp  = da_balance / `GDP.(US$)`, pa_gdp = pa_balance / `GDP.(US$)`, fdi_gdp =  fdi_balance / `GDP.(US$)`, fx_gdp = FX.Reserves.minus.gold / `GDP.(US$)`, ca_gdp = Current.account.balance / `GDP.(US$)`) %>%
+    select(Year, nfa_gdp, da_gdp, pa_gdp, fx_gdp, fdi_gdp, ca_gdp) %>%
+    pivot_longer(!Year, names_to = "type", values_to = "value") %>%
+    filter(Year >= 1992)
+
+
+plots_df <- tibble(vars = c("nfa_gdp", "da_gdp", "pa_gdp", "fx_gdp", "fdi_gdp", "ca_gdp"), 
+                    titles = c("NFA/GDP", "Debt Assets/GDP", "Portfolio Assets/GDP", "FDI/GDP", "FX Reserves/GDP", "Current Account/GDP"), 
+                    tp = c(-0.53, -0.35, 0, -0.18, 0.046, NA), 
+                    colour = c("darkgreen", "#009900", "#5dcaa5", "#336633", "#006600", "black"))
+
+setdiff(mx_long$type, unique(plots_df$vars))
+
+patches <- list()
+for (i in 1:nrow(plots_df)){
+    local({
+    series <- plots_df$vars[i]
+    title <- plots_df$titles[i]
+    tp <- plots_df$tp[i]
+    colour <- plots_df$colour[i]
+
+    y_max <- mx_long %>% filter(type == series) %>% pull(value) %>% max(na.rm = TRUE)
+
+    plot <- ggplot(data = mx_long %>% filter(type == series), aes(x = Year, y = value)) +
+        geom_line(data = mx_long %>% filter(type == series),
+                  linewidth = 1, color = colour, linetype = "solid") +
+        scale_x_continuous(breaks = seq(1992, 2022, by = 4)) +
+        geom_vline(xintercept = 1994, color = "black", alpha = 0.12,
+                  linewidth = 0.5, linetype = "dashed") +
+        geom_vline(xintercept = 2008, color = "black", alpha = 0.12,
+                  linewidth = 0.5, linetype = "dashed") +
+        labs(title = title,  
+            x = "Years", 
+            y = "Ratio") +
+        theme_erasmus() +
+        theme(plot.title = element_text(face = "plain"))
+
+    if (!is.na(tp)) {
+      plot <- plot + geom_hline(yintercept = tp, linetype = "dashed", 
+                          colour = "dimgrey", linewidth = 0.5) 
+    }
+
+    patches[[title]] <<- plot ##explicitly write to parent env
+    })
+}
+
+combined_plot <- patchwork::wrap_plots(patches, nrow = 3) +
+                patchwork::plot_layout(axis_titles = "collect") +
+                patchwork::plot_annotation(title = "External Ratio's, 1992-2022",
+                                caption = "Source: EWN Database\nNotes: First vertical line represents Tequila Crisis, second represents GFC.\n              Dashed horizontal lines represent tipping point estimates from Catao and Milesi-Ferretti (2013) ",
+                                theme = theme(plot.title = element_text(colour = "#0e3d2e", face = "bold", size = 14, family = "Georgia", hjust = 0.5),
+                                            axis.title = element_text(face = "bold", family = "Georgia"),
+                                            plot.caption = element_text(color = "#888780", size = 7.5, family = "Georgia", hjust = 0, margin = margin(t = 10)), 
+                                            plot.background    = element_rect(fill = "#F7F6F2", color = NA),
+                                            panel.background   = element_rect(fill = "#F7F6F2", color = NA)))
+
+ggsave(file = here::here("patches.png"), plot = combined_plot, width = 8, height = 10, dpi = 300)
+
+
+
+
+View(mx_long)
