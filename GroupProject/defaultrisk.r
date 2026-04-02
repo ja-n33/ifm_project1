@@ -8,6 +8,7 @@ get_te <- function(endpoint, params = list()) {
   fromJSON(content(response, "text", encoding = "UTF-8"))
 }
 
+
 theme_erasmus <- function(base_size = 11) {
   theme_minimal(base_size = base_size) +
   theme(
@@ -30,25 +31,26 @@ theme_erasmus <- function(base_size = 11) {
                                       family = "Georgia", face = "italic"),
 
     # titles
-    plot.title         = element_text(color = "#0e3d2e", size = 14,
+    plot.title         = element_text(color = "#0e3d2e", size = 16,
                                       family = "Georgia", face = "bold",
                                       margin = margin(b = 4)),
-    plot.subtitle      = element_text(color = "#5F5E5A", size = 9,
-                                      family = "Georgia", 
-                                      margin = margin(b = 12)),
-    plot.caption       = element_text(color = "#888780", size = 7.5,
+    plot.subtitle       = element_text(color = "dimgrey", size = 12, 
+                                      family = "Georgia", hjust = 0, 
+                                      margin = margin(t = 10), face = "bold"), 
+    plot.caption       = element_text(color = "dimgrey", size = 12, 
                                       family = "Georgia", hjust = 0,
-                                      margin = margin(t = 10)),
+                                       margin = margin(t = 10), face = "bold"), 
 
     # legend
     legend.position    = "right",
     legend.justification = "center",
     legend.direction = "vertical",
-    legend.text        = element_text(color = "#2C2C2A", size = 8.5,
-                                      family = "Georgia"),
+    legend.text        = element_text(color = "#2C2C2A", size = 12,
+                                      family = "Georgia", face = "bold"),
     legend.title       = element_blank(),
-    legend.key.width   = unit(1.8, "cm"),
+    legend.key.width   = unit(0.5, "cm"),
     legend.key.height  = unit(0.35, "cm"),
+        legend.key.spacing.y = unit(0.6,"cm"),
     legend.background  = element_rect(fill = "#F7F6F2", color = NA),
     legend.margin      = margin(0, 0, 4, 0),
 
@@ -108,20 +110,21 @@ mx_ratings <- ratings_dta %>%
 
 
 ratingsplot <- ggplot(mx_ratings, aes(x = Year, y = n_Rating, colour = Agency)) +
-        geom_line(linewidth = 1.5) +
+        geom_line(linewidth = 2.5) +
         scale_x_continuous(breaks = seq(from = 1992, to = 2022, by = 2), expand = c(0, 0)) + 
         scale_colour_manual(values = c("Moody's" = "#0e3d2e", "S&P" = "#5dcaa5")) +
-        geom_vline(xintercept = 1994, color = "black", alpha = 0.12,
+        geom_vline(xintercept = 1994, color = "black", alpha = 0.5,
              linewidth = 1, linetype = "dashed") +
         annotate("text", x = 1994.3, y = 8.2, label = "Tequila crisis",
            size = 2.4, color = "#7dbfa0", hjust = 0, angle = 90) +
-        geom_vline(xintercept = 2008, color = "black", alpha = 0.12,
+        geom_vline(xintercept = 2008, color = "black", alpha = 0.5,
              linewidth = 1, linetype = "dashed") +
         annotate("text", x = 2008.3, y = 8.2, label = "Global Financial Crisis",
            size = 2.4, color = "#7dbfa0", hjust = 0, angle = 90) +
         scale_y_continuous(breaks = as.numeric(names(dual_labels)), labels = dual_labels) +
+              guides(colour = guide_legend(nrow = 2, byrow = FALSE)) +
         labs(title = "Mexican Sovereign Credit Ratings", 
-            caption = "Source: S&P, Moody's, Trading Economics\nNote: Ratings reflect the Mexican federal government's ability to service foreign-denomindated bonds", 
+            caption = "Source: S&P, Moody's, Trading Economics\nNote: Ratings reflect the Mexican federal government's ability to service foreign-denomindated bonds.\n            First veritcal line represents Tequila Crisis, second represents GFC.", 
             y = "Rating (S&P / Moody's)") +
         theme_erasmus() 
 
