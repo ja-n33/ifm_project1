@@ -110,7 +110,7 @@ mx_ratings <- ratings_dta %>%
 
 
 ratingsplot <- ggplot(mx_ratings, aes(x = Year, y = n_Rating, colour = Agency)) +
-        geom_line(linewidth = 2.5) +
+        geom_line(linewidth = 2) +
         scale_x_continuous(breaks = seq(from = 1992, to = 2022, by = 2), expand = c(0, 0)) + 
         scale_colour_manual(values = c("Moody's" = "#0e3d2e", "S&P" = "#5dcaa5")) +
         geom_vline(xintercept = 1994, color = "black", alpha = 0.5,
