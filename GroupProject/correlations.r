@@ -162,7 +162,7 @@ pwtplot <- ggplot(data = cons_pwt_df[cons_pwt_df$type %in% c("mexc_mexy_pe", "me
              linewidth = 0.75, linetype = "dashed") +
     geom_vline(xintercept = 2008, color = "black", alpha = 0.2,
              linewidth = 0.75, linetype = "dashed") +
-    labs(title = "Mexican Private Consumption Pearson Correlations, 1992-2002", 
+    labs(title = "Mexican Consumption Pearson Correlations, 1992-2002", 
       caption = "Source: Penn World Table\nNote: Consumption includes Private and Public Consumption Spending.\n            First vertical line represents Tequila Crisis, second represents GFC.", 
       y = "Correlation", 
       x = "Year") +
