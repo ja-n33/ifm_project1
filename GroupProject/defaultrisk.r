@@ -209,8 +209,9 @@ debtserviceplot <- ggplot(mx_ds_ratio, aes(x = year, y = ds_ratio, colour = "Mex
 debtserviceplot
 ggsave(file = here::here("debtservice.png"), plot = debtserviceplot, width = 10, height = 6, dpi = 300)
 
-
+####
 ##Show Net Financial Position as with the data we used in the second quiz
+####
 
 data <- openxlsx::read.xlsx(here::here("ewn_2025.xlsx"), "Dataset")
 
@@ -255,7 +256,7 @@ for (i in 1:nrow(plots_df)){
     plot <- ggplot(data = mx_long %>% filter(type == series), aes(x = Year, y = value)) +
         geom_line(data = mx_long %>% filter(type == series),
                   linewidth = 1, color = colour, linetype = "solid") +
-        scale_x_continuous(breaks = seq(1992, 2022, by = 4)) +
+        scale_x_continuous(breaks = seq(1992, 2022, by = 6)) +
         geom_vline(xintercept = 1994, color = "black", alpha = 0.12,
                   linewidth = 0.5, linetype = "dashed") +
         geom_vline(xintercept = 2008, color = "black", alpha = 0.12,
