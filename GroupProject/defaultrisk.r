@@ -279,7 +279,7 @@ for (i in 1:nrow(plots_df)){
 combined_plot <- patchwork::wrap_plots(patches, nrow = 3) +
                 patchwork::plot_layout(axis_titles = "collect") +
                 patchwork::plot_annotation(title = "External Ratio's, 1992-2022",
-                                caption = "Source: EWN Database\nNotes: First vertical line represents Tequila Crisis, second represents GFC.\n              Dashed horizontal lines represent tipping point estimates from Catao and\n              Milesi-Ferretti (2013) ",
+                                caption = "Source: EWN Database\nNotes: First vertical line represents Tequila Crisis, second represents GFC.\n              Dashed horizontal lines represent multivariate tipping point estimates from Catão\n              and Milesi-Ferretti (2013) ",
                                 theme = theme(plot.title = element_text(colour = "#0e3d2e", face = "bold", size = 14, family = "Georgia", hjust = 0.5),
                                             axis.title = element_text(face = "bold", family = "Georgia"),
                                             plot.caption = element_text(color = "dimgrey", size = 12, family = "Georgia", hjust = 0, margin = margin(t = 10), face = "bold"), 
