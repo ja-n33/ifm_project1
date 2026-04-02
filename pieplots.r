@@ -14,35 +14,36 @@ theme_erasmus <- function(base_size = 11) {
     panel.grid.minor   = element_blank(),
 
     # axis
-    # axis.line.x        = element_line(color = "#BFBDB5", linewidth = 0.5),
-    # axis.ticks.x       = element_line(color = "#BFBDB5", linewidth = 0.4),
-    # axis.ticks.y       = element_blank(),
-    # axis.text          = element_text(color = "#5F5E5A", size = 8.5,
-    #                                   family = "Georgia"),
-    # axis.title         = element_text(color = "#2C2C2A", size = 9,
-    #                                   family = "Georgia", face = "italic"),
+    axis.line.x        = element_line(color = "#BFBDB5", linewidth = 0.5),
+    axis.ticks.x       = element_line(color = "#BFBDB5", linewidth = 0.4),
+    axis.ticks.y       = element_blank(),
+    axis.text          = element_text(color = "#5F5E5A", size = 8.5,
+                                      family = "Georgia"),
+    axis.title         = element_text(color = "#2C2C2A", size = 9,
+                                      family = "Georgia", face = "italic"),
 
     # titles
-    plot.title         = element_text(color = "#0e3d2e", size = 18,
+    plot.title         = element_text(color = "#0e3d2e", size = 16,
                                       family = "Georgia", face = "bold",
                                       margin = margin(b = 4)),
-    plot.subtitle      = element_text(color = "#5F5E5A", size = 9,
-                                      family = "Georgia", 
-                                      margin = margin(b = 12)),
-    plot.caption       = element_text(color = "#888780", size = 7.5,
+    plot.subtitle       = element_text(color = "dimgrey", size = 12, 
+                                      family = "Georgia", hjust = 0, 
+                                      margin = margin(t = 10), face = "bold"), 
+    plot.caption       = element_text(color = "dimgrey", size = 12, 
                                       family = "Georgia", hjust = 0,
-                                      margin = margin(t = 10)),
+                                       margin = margin(t = 10), face = "bold"), 
 
     # legend
-    legend.position    = "right",
-    legend.justification = "center",
+    legend.position    = "left",
+    legend.justification = "left",
     legend.direction = "vertical",
-    legend.text        = element_text(color = "#2C2C2A", size = 8.5,
-                                      family = "Georgia"),
+    legend.text        = element_text(color = "#2C2C2A", size = 16,
+                                      family = "Georgia", face = "bold"),
     legend.title       = element_blank(),
-    legend.key.width   = unit(0.8, "cm"),
-    legend.key.height  = unit(0.5, "cm"),
-    legend.background  = element_rect(fill = "#F7F6F2", color = NA),
+    legend.key.width   = unit(0.2, "cm"),
+    legend.key.height  = unit(0.2, "cm"),
+    legend.key.spacing.y = unit(0.6,"cm"),
+    legend.background  = element_rect(fill = "transparent", color = NA),
     legend.margin      = margin(0, 0, 4, 0),
 
     # margins
@@ -80,13 +81,14 @@ assets_pie <- ggplot(assets_reduced, aes(x = "", y = val, fill = COUNTERPART_COU
   coord_polar(theta = "y") +
   geom_text(aes(label = ifelse(val > 5, paste0(round(val), "%"), "")), 
             position = position_stack(vjust = 0.5), 
-            color = "black", 
-            size = 3.5,
+            color = "dimgrey", 
+            size = 5,
             family = "Georgia", 
             fontface = "bold") +
   labs(title = "Mexican Foreign Asset Composition by Country",
         fill = "Country",
         caption = "Source: IMF") +
+        guides(fill = guide_legend(nrow = 8, byrow = FALSE)) +
     theme_erasmus() + 
 theme(axis.text = element_blank(),
         axis.line = element_blank(), 
@@ -134,6 +136,8 @@ liabilities_pie <- ggplot(liabilities_reduced, aes(x = "", y = val, fill = COUNT
     labs(title = "Mexican Foreign Liabilities Composition by Country",
         fill = "Country", 
         caption = "Source: IMF") +
+                guides(fill = guide_legend(nrow = 8, byrow = FALSE)) +
+
     theme_erasmus() + 
     theme(axis.text = element_blank(),
         axis.line = element_blank(), 
