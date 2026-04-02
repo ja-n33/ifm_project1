@@ -123,7 +123,7 @@ ratingsplot <- ggplot(mx_ratings, aes(x = Year, y = n_Rating, colour = Agency)) 
            size = 2.4, color = "#7dbfa0", hjust = 0, angle = 90) +
         scale_y_continuous(breaks = as.numeric(names(dual_labels)), labels = dual_labels) +
               guides(colour = guide_legend(nrow = 2, byrow = FALSE)) +
-        labs(title = "Mexican Sovereign Credit Ratings", 
+        labs(title = "Mexican Sovereign Credit Ratings, 1992-2022", 
             caption = "Source: S&P, Moody's, Trading Economics\nNote: Ratings reflect the Mexican federal government's ability to service foreign-denomindated bonds.\n            First veritcal line represents Tequila Crisis, second represents GFC.", 
             y = "Rating (S&P / Moody's)") +
         theme_erasmus() 
