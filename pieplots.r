@@ -81,7 +81,7 @@ assets_pie <- ggplot(assets_reduced, aes(x = "", y = val, fill = COUNTERPART_COU
   coord_polar(theta = "y") +
   geom_text(aes(label = ifelse(val > 5, paste0(round(val), "%"), "")), 
             position = position_stack(vjust = 0.5), 
-            color = "dimgrey", 
+            color = "black", 
             size = 5,
             family = "Georgia", 
             fontface = "bold") +
