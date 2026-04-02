@@ -16,31 +16,32 @@ theme_erasmus <- function(base_size = 11) {
     axis.line.x        = element_line(color = "#BFBDB5", linewidth = 0.5),
     axis.ticks.x       = element_line(color = "#BFBDB5", linewidth = 0.4),
     axis.ticks.y       = element_blank(),
-    axis.text          = element_text(color = "#5F5E5A", size = 8.5,
-                                      family = "Georgia"),
-    axis.title         = element_text(color = "#2C2C2A", size = 9,
-                                      family = "Georgia", face = "italic"),
+    axis.text          = element_text(color = "#5F5E5A", size = 10,
+                                      family = "Georgia", face = "bold"),
+    axis.title         = element_text(color = "#2C2C2A", size = 12,
+                                      family = "Georgia", face = "bold.italic"),
 
     # titles
-    plot.title         = element_text(color = "#0e3d2e", size = 14,
+    plot.title         = element_text(color = "#0e3d2e", size = 16,
                                       family = "Georgia", face = "bold",
                                       margin = margin(b = 4)),
-    plot.subtitle      = element_text(color = "#5F5E5A", size = 9,
-                                      family = "Georgia", 
-                                      margin = margin(b = 12)),
-    plot.caption       = element_text(color = "#888780", size = 7.5,
+    plot.subtitle       = element_text(color = "dimgrey", size = 12, 
+                                      family = "Georgia", hjust = 0, 
+                                      margin = margin(t = 10), face = "bold"), 
+    plot.caption       = element_text(color = "dimgrey", size = 12, 
                                       family = "Georgia", hjust = 0,
-                                      margin = margin(t = 10)),
+                                       margin = margin(t = 10), face = "bold"), 
 
     # legend
     legend.position    = "right",
     legend.justification = "center",
     legend.direction = "vertical",
-    legend.text        = element_text(color = "#2C2C2A", size = 8.5,
-                                      family = "Georgia"),
+    legend.text        = element_text(color = "#2C2C2A", size = 12,
+                                      family = "Georgia", face = "bold"),
     legend.title       = element_blank(),
-    legend.key.width   = unit(1.8, "cm"),
+    legend.key.width   = unit(0.5, "cm"),
     legend.key.height  = unit(0.35, "cm"),
+        legend.key.spacing.y = unit(0.6,"cm"),
     legend.background  = element_rect(fill = "#F7F6F2", color = NA),
     legend.margin      = margin(0, 0, 4, 0),
 
@@ -48,7 +49,6 @@ theme_erasmus <- function(base_size = 11) {
     plot.margin        = margin(16, 20, 12, 14)
   )
 }
-
 
 
 ########################################################################################################################################################################
@@ -118,11 +118,13 @@ for (i in 1:length(grouplist)){
 }
 
 defacto_intplot <- ggplot(data = defacto_plot %>% filter(Year >= 1996 & Year <= 2022), aes(x = Year, y = value, colour = type)) +
-            geom_line(linewidth = 1.5) +
+            geom_line(linewidth = 2) +
             scale_colour_manual(values = c("latam" = "#0e3d2e", "row" = "#006600", "mexico" = "#5dcaa5"), labels = c("mexico" = "Mexico", "row" = "Rest of World excl Mexico", "latam" = "Latin America excl Mexico")) +
             scale_x_continuous(breaks = seq(from = 1996, to = 2022, by = 4), expand = c(0, 0)) + 
+            geom_vline(xintercept = 2008, color = "black", alpha = 0.2,
+             linewidth = 0.75, linetype = "dashed") +
             labs(title = "Financial Integration, 1996-2022", 
-            caption = "Source: EWN Database\nNote: Financial Integration is the sum of total liabilities and total assets as a percentage of GDP", 
+            caption = "Source: EWN Database\nNote: Financial Integration is the sum of total liabilities and total assets as a percentage of GDP\n            Vertical line represents GFC.", 
             y = "Percentage",
             x = "Year") +
             theme_erasmus()

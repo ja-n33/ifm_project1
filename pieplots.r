@@ -137,7 +137,6 @@ liabilities_pie <- ggplot(liabilities_reduced, aes(x = "", y = val, fill = COUNT
         fill = "Country", 
         caption = "Source: IMF") +
                 guides(fill = guide_legend(nrow = 8, byrow = FALSE)) +
-
     theme_erasmus() + 
     theme(axis.text = element_blank(),
         axis.line = element_blank(), 

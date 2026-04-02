@@ -25,10 +25,10 @@ theme_erasmus <- function(base_size = 11) {
     axis.line.x        = element_line(color = "#BFBDB5", linewidth = 0.5),
     axis.ticks.x       = element_line(color = "#BFBDB5", linewidth = 0.4),
     axis.ticks.y       = element_blank(),
-    axis.text          = element_text(color = "#5F5E5A", size = 8.5,
-                                      family = "Georgia"),
-    axis.title         = element_text(color = "#2C2C2A", size = 9,
-                                      family = "Georgia", face = "italic"),
+    axis.text          = element_text(color = "#5F5E5A", size = 10,
+                                      family = "Georgia", face = "bold"),
+    axis.title         = element_text(color = "#2C2C2A", size = 12,
+                                      family = "Georgia", face = "bold.italic"),
 
     # titles
     plot.title         = element_text(color = "#0e3d2e", size = 16,
@@ -115,13 +115,9 @@ ratingsplot <- ggplot(mx_ratings, aes(x = Year, y = n_Rating, colour = Agency)) 
         scale_colour_manual(values = c("Moody's" = "#0e3d2e", "S&P" = "#5dcaa5")) +
         geom_vline(xintercept = 1994, color = "black", alpha = 0.5,
              linewidth = 1, linetype = "dashed") +
-        annotate("text", x = 1994.3, y = 8.2, label = "Tequila crisis",
-           size = 2.4, color = "#7dbfa0", hjust = 0, angle = 90) +
         geom_vline(xintercept = 2008, color = "black", alpha = 0.5,
              linewidth = 1, linetype = "dashed") +
-        annotate("text", x = 2008.3, y = 8.2, label = "Global Financial Crisis",
-           size = 2.4, color = "#7dbfa0", hjust = 0, angle = 90) +
-        scale_y_continuous(breaks = as.numeric(names(dual_labels)), labels = dual_labels) +
+        scale_y_continuous(breaks = as.numeric(names(dual_labels)), labels = dual_labels, limits = c(0, 20), expand = c(0, 0)) +
               guides(colour = guide_legend(nrow = 2, byrow = FALSE)) +
         labs(title = "Mexican Sovereign Credit Ratings, 1992-2022", 
             caption = "Source: S&P, Moody's, Trading Economics\nNote: Ratings reflect the Mexican federal government's ability to service foreign-denomindated bonds.\n            First veritcal line represents Tequila Crisis, second represents GFC.", 

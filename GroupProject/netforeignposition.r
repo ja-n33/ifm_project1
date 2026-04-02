@@ -16,10 +16,10 @@ theme_erasmus <- function(base_size = 11) {
     axis.line.x        = element_line(color = "#BFBDB5", linewidth = 0.5),
     axis.ticks.x       = element_line(color = "#BFBDB5", linewidth = 0.4),
     axis.ticks.y       = element_blank(),
-    axis.text          = element_text(color = "#5F5E5A", size = 8.5,
-                                      family = "Georgia"),
-    axis.title         = element_text(color = "#2C2C2A", size = 9,
-                                      family = "Georgia", face = "italic"),
+    axis.text          = element_text(color = "#5F5E5A", size = 10,
+                                      family = "Georgia", face = "bold"),
+    axis.title         = element_text(color = "#2C2C2A", size = 12,
+                                      family = "Georgia", face = "bold.italic"),
 
     # titles
     plot.title         = element_text(color = "#0e3d2e", size = 14,
